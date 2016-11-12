@@ -98,19 +98,35 @@ public class CustomerController {
         return "customer/viewcustomerorder";
     }
 
+    @RequestMapping("/order/viewpl")
+    public String viewCustomerOrderPl(Model model) {
+        List<CustomerOrder> customerOrders = customerOrderRepository.findAll();
+        for (CustomerOrder customerOrder : customerOrders) {
+            populateProduct(customerOrder);
+        }
+        model.addAttribute("customerOrders", customerOrders);
+        return "customer/viewcustomerorderpl";
+    }
+
     @RequestMapping("/order/edit/{id}")
     public String editCustomerOrder(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("customerOrder", customerOrderRepository.findOne(id));
         return "customer/viewcustomerorder";
     }
 
-    @RequestMapping(value = "order/delete/{id}", method = RequestMethod.DELETE)
-    @Transactional
-    public String deleteCustomerOrder(@PathVariable("id") Integer id, Model model) {
+    @RequestMapping(value = "order/update/{id}", method = RequestMethod.POST)
+    public String updateCustomerOrder(@PathVariable("id") Integer id, Model model) {
         CustomerOrder customerOrder = customerOrderRepository.findOne(id);
         customerOrder.setDeleteFlag(true);
         customerOrderRepository.save(customerOrder);
         return "redirect:/customer/order/view";
+    }
+
+    @RequestMapping(value = "order/delete/{id}", method = RequestMethod.DELETE)
+    @Transactional
+    public String deleteCustomerOrder(@PathVariable("id") Integer id, Model model) {
+        customerOrderRepository.deleteCustomerOrderById(id);
+        return "redirect:/customer/order/viewpl";
     }
 
     private void populateCustomer(Model model) {

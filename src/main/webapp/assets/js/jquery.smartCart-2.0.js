@@ -321,11 +321,7 @@
 
                           // custom add each item into menu (elmMenus)
                           var elmItem = $('<div></div>').addClass("portfolio-item");
-                          if(productCategory == 'rice') {
-                            elmItem.addClass("creative");
-                          } else {
-                            elmItem.addClass("corporate");
-                          }
+                          elmItem.addClass(productCategory);
 
                           var itemDetail = $('<div></div>').addClass("portfolio-item-inner");
                           var itemImg = $("<img></img>").attr("src", prodImgSrc).addClass("img-responsive");

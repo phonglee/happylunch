@@ -1,18 +1,3 @@
-/*
- * Copyright 2015 Benedikt Ritter
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.happylunch.controller;
 
 import com.happylunch.entity.Category;
@@ -62,8 +47,13 @@ public class HomeController {
     }
 
     @RequestMapping("/administration")
-    public String test(Model model) {
+    public String admin(Model model) {
         return "admin";
+    }
+
+    @RequestMapping("/pl")
+    public String pl(Model model) {
+        return "pl";
     }
 
     @RequestMapping("/init")
@@ -92,52 +82,52 @@ public class HomeController {
         Date today = new Date();
         Product product = productRepository.findById(new Integer(1));
         if (null == product) {
-            product = new Product("MS1 Thịt Luộc Cà Pháo", "Thịt luộc cà pháo + Canh cua + Cơm + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/01.jpg", today, category);
+            product = new Product("MS1 Thịt Luộc Cà Pháo", "Thịt luộc cà pháo + Canh cua + Cơm + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/01.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS2 Cá Basa Kho Tiêu", "Cá basa kho tiêu + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/02.jpg", today, category);
+            product = new Product("MS2 Cá Basa Kho Tiêu", "Cá basa kho tiêu + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/02.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS3 Chim Cút Rôti", "Chim cút rôti + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/03.jpg", today, category);
+            product = new Product("MS3 Chim Cút Rôti", "Chim cút rôti + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/03.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS4 Thịt Kho Trứng", "Thịt kho trứng + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/04.jpg", today, category);
+            product = new Product("MS4 Thịt Kho Trứng", "Thịt kho trứng + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/04.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS5 Sườn Non Chua Ngọt", "Sườn non chua ngọt + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/05.jpg", today, category);
+            product = new Product("MS5 Sườn Non Chua Ngọt", "Sườn non chua ngọt + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/05.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS6 Bún Bò", "Bún bò + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/06.jpg", today, noodle);
+            product = new Product("MS6 Bún Bò", "Bún bò + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/06.jpg", today, noodle);
             productRepository.save(product);
 
-            product = new Product("MS7 Chả Cá Viên Trứng Cút Sốt Cà", "Chả cả viên trứng cút sốt cà + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/07.jpg", today, category);
+            product = new Product("MS7 Chả Cá Viên Trứng Cút Sốt Cà", "Chả cả viên trứng cút sốt cà + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/07.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS8 Hủ Tiếu Mì Chay", "Hủ tiếu mì chay + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/08.jpg", today, noodle);
+            product = new Product("MS8 Hủ Tiếu Mì Chay", "Hủ tiếu mì chay + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/08.jpg", today, noodle);
             productRepository.save(product);
 
-            product = new Product("MS9 Gà Chiên Sốt Chanh", "Gà chiên sốt chanh + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/09.jpg", today, category);
+            product = new Product("MS9 Gà Chiên Sốt Chanh", "Gà chiên sốt chanh + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/09.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS10 Cá Trê Chiên Mắm Gừng", "Cá trê chiên mắm gừng + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/10.jpg", today, category);
+            product = new Product("MS10 Cá Trê Chiên Mắm Gừng", "Cá trê chiên mắm gừng + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/10.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS11 Cá Diêu Hồng Chưng Tương", "Cá diêu hồng chưng tương + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/11.jpg", today, category);
+            product = new Product("MS11 Cá Diêu Hồng Chưng Tương", "Cá diêu hồng chưng tương + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/11.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS12 Vịt Kho Gừng", "Vịt kho gừng + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/12.jpg", today, category);
+            product = new Product("MS12 Vịt Kho Gừng", "Vịt kho gừng + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/12.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS13 Bò Nấu Lagu", "Bò nấu lagu + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/13.jpg", today, category);
+            product = new Product("MS13 Bò Nấu Lagu", "Bò nấu lagu + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/13.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS14 Gà Kho Nghệ", "Gà kho nghệ + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/14.jpg", today, category);
+            product = new Product("MS14 Gà Kho Nghệ", "Gà kho nghệ + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/14.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS15 Đậu Hũ Om Trứng", "Đậu hũ om trứng + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/15.jpg", today, category);
+            product = new Product("MS15 Đậu Hũ Om Trứng", "Đậu hũ om trứng + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/15.jpg", today, category);
             productRepository.save(product);
 
-            product = new Product("MS16 Thịt Bọc Sả Chiên", "Thịt bọc sả chiên + Cơm + Rau + Tráng miệng", new BigDecimal("30000"), "../assets/images/food/16.jpg", today, category);
+            product = new Product("MS16 Thịt Bọc Sả Chiên", "Thịt bọc sả chiên + Cơm + Rau + Tráng miệng", new BigDecimal("25000"), "../assets/images/food/16.jpg", today, category);
             productRepository.save(product);
         }
     }

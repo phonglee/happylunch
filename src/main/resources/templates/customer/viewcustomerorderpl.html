@@ -32,7 +32,7 @@
 
             <div class="collapse navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
-                    <li class="scroll active"><a href="/administration">Home</a></li>
+                    <li class="scroll active"><a href="/pl">Home</a></li>
                     <li class="scroll"><a id="menu_product" href="/category/view">Manage Category</a></li>
                     <li class="scroll"><a href="/product/view">Manage Product</a></li>
                     <li class="scroll"><a href="/customer/order/view">Manage Customer Order</a></li>
@@ -103,7 +103,7 @@
                     </form>
                 </td>
                 <td>
-                    <form action="#" th:action="@{'/customer/order/update/{id}'(id=${item.id})}" th:method="post" >
+                    <form action="#" th:action="@{'/customer/order/delete/{id}'(id=${item.id})}" th:method="delete" >
                         <button type="submit" id="submitButton"> Delete</button>
                     </form>
                 </td>

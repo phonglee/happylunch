@@ -16,4 +16,8 @@ public interface CustomerOrderRepository extends JpaRepository<CustomerOrder, In
 
     @Query("from CustomerOrder where deleteFlag=false order by dateCreated desc")
     List<CustomerOrder> findAllAvailable();
+
+    @Modifying
+    @Query("delete from CustomerOrder where id = ?1")
+    void deleteCustomerOrderById(Integer id);
 }
