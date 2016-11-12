@@ -57,7 +57,6 @@ public class HomeController {
     @RequestMapping("/")
     public String home(Model model) {
         model.addAttribute("customerOrder", new CustomerOrder());
-        initProduct();
         model.addAttribute("products", productRepository.findAllAvailable());
         return "index";
     }
@@ -65,6 +64,12 @@ public class HomeController {
     @RequestMapping("/administration")
     public String test(Model model) {
         return "admin";
+    }
+
+    @RequestMapping("/init")
+    public String initData(Model model) {
+        initProduct();
+        return "redirect:/product/view";
     }
 
     @RequestMapping("/addcategory")

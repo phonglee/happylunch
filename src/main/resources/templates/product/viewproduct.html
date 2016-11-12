@@ -58,6 +58,9 @@
             </table>
         </form>
     </div>
+    <div class="row" th:if="${#lists.isEmpty(products)}">
+        <p class="style1">Init Data : <a class="btn btn-primary btn-sm" href="/init">Go</a></p>
+    </div>
     <div class="row" th:if="${products}">
         <table class="table table-striped">
             <th>
