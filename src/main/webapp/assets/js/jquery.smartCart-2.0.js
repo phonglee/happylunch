@@ -23,11 +23,16 @@
                 
                 // Attribute Settings
                 // You can assign the same you have given on the hidden elements
-                var attrProductId = "pid";  // Product Id attribute
-                var attrProductName = "pname"; // Product Name attribute   
-                var attrProductPrice = "pprice"; // Product Price attribute  
-                var attrProductImage = "pimage"; // Product Image attribute
-                var attrCategoryName = "pcategory";
+                // var attrProductId = "pid";  // Product Id attribute
+                // var attrProductName = "pname"; // Product Name attribute
+                // var attrProductPrice = "pprice"; // Product Price attribute
+                // var attrProductImage = "pimage"; // Product Image attribute
+                // var attrCategoryName = "pcategory";
+                var attrProductId = "id";  // Product Id attribute
+                var attrProductName = "name"; // Product Name attribute
+                var attrProductPrice = "value"; // Product Price attribute
+                var attrProductImage = "alt"; // Product Image attribute
+                var attrCategoryName = "action";
                 
                 // Labels & Messages              
                 var labelCartMenuName = 'My Cart (_COUNT_)';  // _COUNT_ will be replaced with cart count
@@ -55,10 +60,32 @@
                 var messageQuantityUpdated = 'Mã số được thêm vào giỏ hàng';
                 var messageQuantityErrorAdd = 'Invalid quantity. Product cannot add';
                 var messageQuantityErrorUpdate = 'Invalid quantity. Quantity cannot update';
-                
-                $("#payMoney").click(function() {
-                   alert('Checkout...');
-                   return false;
+
+                $("#rice_more").click(function() {
+                    $("#menu_product").click();
+                });
+
+                $("#noodle_more").click(function() {
+                    $("#menu_product").click();
+                });
+
+                $("#add_more").click(function() {
+                    $("#menu_product").click();
+                });
+
+                $('#orderModal').on('show.bs.modal', function (event) {
+                    var cItemCount = 0;
+                    var orderItems = "";
+                    elmProductSelected.children("option").each(function(n) {
+                        var pIdx = $(this).attr("rel");
+                        var pValue = $(this).attr("value");
+                        var valueArray = pValue.split('|');
+                        var pQty = valueArray[1];
+                        cItemCount = cItemCount + (pQty-0);
+                        orderItems = orderItems + pIdx +":" + pQty + ";"
+                    });
+                    var modal = $(this);
+                    modal.find('.modal-body input[name=items]').val(orderItems);
                 });
                 
                 // Create SelectList                                
@@ -105,21 +132,15 @@
                             var newPValue =  prdId + '|' + prdQty;
                             productItem.attr("value",newPValue).attr('selected', true);    
                             var prdTotal = getMoneyFormatted(pPrice * prdQty);
-                            // Now go for updating the design
-                            //var lalQuantity =  $('#lblQuantity'+i).val(prdQty);
-                            //var lblTotal =  $('#lblTotal'+i).html(prdTotal);
+
                             $('#colQuantity'+i).val(prdQty);
-                            $('#trTotal'+i).html(prdTotal);
-                            // show product quantity updated message
-                            //showHighlightMessage(messageQuantityUpdated);                                                      
+                            $('#trTotal'+i).html(formatNumber(prdTotal));
                         } else {
                             // This is a new item so create the list
                             var prodStr = pId + '|' + qty;
                             productItem = $('<option></option>').attr("rel",i).attr("value",prodStr).attr('selected', true).html(pName);
                             elmProductSelected.append(productItem);
                             addCartItemDisplay(addProduct,qty);
-                            // show product added message
-                            //showHighlightMessage(messageItemAdded);                            
                         }
                         // refresh the cart
                         refreshCartValues();
@@ -145,7 +166,7 @@
                     // custom add item to cart
                     //column name
                     var nameCol = $('<td data-th="Product"><div class="row"><div class="col-sm-2 hidden-xs"><img src="'+prodImgSrc+'" class="img-responsive"/></div><div class="col-sm-10"><h4 class="nomargin">'+pName+'</h4></div></div></td>');
-                    var priceCol = $('<td data-th="Price">'+pPrice+'</td>');
+                    var priceCol = $('<td data-th="Price"> VND '+formatNumber(pPrice)+'</td>');
                     var inputQtyCol = $('<input type="number" class="form-control text-center" value="'+Quantity+'">').attr("id","colQuantity"+pIndex).attr("rel",pIndex);
                     $(inputQtyCol).bind("change", function(e) {
                         var newQty = $(this).val();
@@ -163,7 +184,7 @@
                         return true;
                     });
                     var quantityCol = $('<td data-th="Quantity"></td>').append(inputQtyCol);
-                    var subTotalCol = $('<td data-th="Subtotal" class="text-center">'+pTotal+'</td>').attr("id","trTotal"+pIndex);
+                    var subTotalCol = $('<td data-th="Subtotal" class="text-center">'+formatNumber(pTotal)+'</td>').attr("id","trTotal"+pIndex);
                     var removeBtn = $('<button class="btn btn-danger btn-sm" rel="'+pIndex+'"><i class="fa fa-trash-o"></i></button>');
                     $(removeBtn).bind("click", function(e){
                         var idx = $(this).attr("rel");
@@ -192,11 +213,6 @@
                     var valueArray = pValue.split('|');
                     var pQty = valueArray[1];
                     productItem.remove();
-                    
-                    // $("#divCartItem"+idx,elmCartList).slideUp("slow", function(){ $(this).remove();
-                    // showHighlightMessage(messageItemRemoved);
-                    // //Refresh the cart
-                    // refreshCartValues();});
 
                     $("#trCartItem"+idx, cartList).slideUp("slow", function() { 
                       $(this).remove();                      
@@ -234,7 +250,7 @@
                     var prdTotal = getMoneyFormatted(pPrice * qty);
                         // Now go for updating the design
                     //var lblTotal =  $('#lblTotal'+idx).html(prdTotal);
-                    var lblTotal =  $('#trTotal'+idx).html(prdTotal);
+                    var lblTotal =  $('#trTotal'+idx).html(formatNumber(prdTotal));
 
                     //showHighlightMessage(messageQuantityUpdated);
                     //Refresh the cart
@@ -263,7 +279,7 @@
                     });
                     subTotal = sTotal;
                     
-                    $('#totalMoney').html('<strong>Tổng '+getMoneyFormatted(subTotal)+'</strong>');
+                    $('#totalMoney').html('<strong>Tổng '+formatNumber(getMoneyFormatted(subTotal))+'</strong>');
                 }
                 
                 function populateCart(){
@@ -305,10 +321,10 @@
 
                           // custom add each item into menu (elmMenus)
                           var elmItem = $('<div></div>').addClass("portfolio-item");
-                          if(productCategory.toLowerCase().indexOf("computers") == -1) {
-                            elmItem.addClass("corporate");
-                          } else {
+                          if(productCategory == 'rice') {
                             elmItem.addClass("creative");
+                          } else {
+                            elmItem.addClass("corporate");
                           }
 
                           var itemDetail = $('<div></div>').addClass("portfolio-item-inner");
@@ -317,7 +333,7 @@
 
                           var item = $('<div></div>').addClass("portfolio-info");
                           item.append("<h3>" +productName+ "</h3>");
-                          item.append("<span>" +productPrice+ "</span>");
+                          item.append("<span>VND " +formatNumber(productPrice)+ "</span>");
                           var pId = $(this).attr(attrProductId);
                           var addToCartBt = $("<a class='preview' data-toggle='tooltip' data-placement='top' title='' href='#' rel='"+i+"'><i class='fa fa-shopping-cart'></i></a>");
 
@@ -342,9 +358,13 @@
                        //showMessage(messageProductEmpty,elmPLProducts);
                    }
                 }
-                
+                function formatNumber (num) {
+                    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+                }
 
-                function showNotification(obj, msg) {                  
+
+
+            function showNotification(obj, msg) {
                   $(obj).attr("title", msg);
                   $(obj).tooltip('show');
                   //$(obj).tooltip({placement: 'top',trigger: 'manual'}).tooltip('show');

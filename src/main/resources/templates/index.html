@@ -20,7 +20,7 @@
     <script src="../assets/js/html5shiv.js" th:href="@{/assets/js/html5shiv.js}"></script>
     <script src="../assets/js/respond.min.js" th:href="@{/assets/js/respond.min.js}"></script>
     <![endif]-->       
-    <link rel="shortcut icon" href="images/ico/favicon.ico" th:href="@{/assets/css/font-awesome.css}" />
+    <link rel="shortcut icon" href="images/ico/happy-lunch.ico" th:href="@{/assets/css/font-awesome.css}" />
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/images/ico/apple-touch-icon-144-precomposed.png" th:href="@{/assets/images/ico/apple-touch-icon-144-precomposed.png}" />
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/images/ico/apple-touch-icon-114-precomposed.png" th:href="@{/assets/images/ico/apple-touch-icon-114-precomposed.png}" />
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/images/ico/apple-touch-icon-72-precomposed.png" th:href="@{/assets/images/ico/apple-touch-icon-72-precomposed.png}" />
@@ -45,10 +45,10 @@
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
                         <li class="scroll active"><a href="#home">Trang Chủ</a></li>
-                        <li class="scroll"><a href="#portfolio">Thực Đơn</a></li>
-                        <li class="scroll"><a href="#features">Thanh Toán</a></li>
+                        <li class="scroll"><a id="menu_product" href="#portfolio">Thực Đơn</a></li>
+                        <li class="scroll"><a href="#features">Đặt Món</a></li>
                         <li class="scroll"><a href="#services">Hướng Dẫn</a></li>
-                        <li class="scroll"><a href="#get-in-touch">Liên Hệ</a></li>
+                        <li class="scroll"><a id="sendContact" href="#get-in-touch">Liên Hệ</a></li>
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -65,7 +65,7 @@
                                 <div class="carousel-content">
                                     <h2><span>Thực đơn</span> đa dạng</h2>
                                     <p></p>
-                                    <a class="btn btn-primary btn-lg" href="#portfolio">Xem Thêm</a>
+                                    <a class="btn btn-primary btn-lg" id="rice_more">Xem Thêm</a>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                 <div class="carousel-content">
                                     <h2>Các món<span> soup</span></h2>
                                     <p></p>
-                                    <a class="btn btn-primary btn-lg" href="#portfolio">Xem Thêm</a>
+                                    <a class="btn btn-primary btn-lg" id="noodle_more">Xem Thêm</a>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">THỰC ĐƠN</h2>
-                <p class="text-center wow fadeInDown">Thực đơn bao gồm cơm trưa văn phòng và các món soup (phở, bún, bánh canh...)</p>
+                <p class="text-center wow fadeInDown">Thực đơn bao gồm cơm trưa văn phòng (cơm + thức ăn + canh + tráng miệng) và các món soup (phở, bún, bánh canh...)</p>
             </div>            
 
             <div class="text-center">
@@ -120,22 +120,25 @@
         </div><!--/.container-->        
         <!-- Smart Cart HTML Starts -->
         <div id="SmartCart" class="scMain">
-            <input type="hidden" pimage="../assets/images/portfolio/01.jpg" pprice="30.000" pdesc="Phần ăn bao gồm cơm + thịt kho + tráng miệng" pcategory="Computers" pname="MS1 Thịt Kho" pid="100" />
-            <input type="hidden" pimage="../assets/images/portfolio/02.jpg" pprice="30.000" pdesc="Phần ăn bao gồm cơm + cá kho + tráng miệng" pcategory="Computers" pname="MS2 Cá Kho" pid="101" />
-            <input type="hidden" pimage="../assets/images/portfolio/03.jpg" pprice="30.000" pdesc="Phần ăn bao gồm cơm + gà kho và trắng miệng" pcategory="Cameras" pname="MS3 Gà Kho" pid="102" />
-            <input type="hidden" pimage="../assets/images/portfolio/04.jpg" pprice="30.000" pdesc="Re-defining the perception of advanced mobile phones? the HTC Touch Diamond? signals a giant leap forward in combining hi-tech prowess with intuitive usability and exhilarating design." pcategory="Mobile Phones" pname="MS4 Bò Xào" pid="103" />
-            <input type="hidden" pimage="../assets/images/portfolio/05.jpg" pprice="30.000" pdesc="IMAC G5/1.8 256MB 160GB SD 20IN OS10.3" pcategory="Computers" pname="MS5 Bún Bò Huế" pid="104" />
-            <input type="hidden" pimage="../assets/images/portfolio/06.jpg" pprice="30.000" pdesc="" pcategory="Mobile Phones" pname="MS6 Bún Mộc" pid="105" />
-            <input type="hidden" pimage="../assets/images/portfolio/07.jpg" pprice="30.000" pdesc="" pcategory="Accessories" pname="MS7 Bánh Canh" pid="106" />
-            <input type="hidden" pimage="../assets/images/portfolio/08.jpg" pprice="30.000" pdesc="" pcategory="Accessories" pname="MS7 Bún Riêu" pid="107" />
+            <div th:each="pro : ${products}" >
+                <input type="hidden" th:id="${pro.id}" th:title="${pro.description}"   th:value="${pro.price}" th:name="${pro.name}" th:action="${pro.category.name}" th:alt="${pro.image}"/>
+            </div>
+            <!--<input type="hidden" pimage="../assets/images/food/01.jpg" pprice="30.000" pdesc="Phần ăn bao gồm cơm + thịt kho + tráng miệng" pcategory="rice" pname="MS1 Thịt Kho" pid="1" />-->
+            <!--<input type="hidden" pimage="../assets/images/food/02.jpg" pprice="30.000" pdesc="Phần ăn bao gồm cơm + cá kho + tráng miệng" pcategory="rice" pname="MS2 Cá Kho" pid="2" />-->
+            <!--<input type="hidden" pimage="../assets/images/food/03.jpg" pprice="30.000" pdesc="Phần ăn bao gồm cơm + gà kho và trắng miệng" pcategory="rice" pname="MS3 Gà Kho" pid="3" />-->
+            <!--<input type="hidden" pimage="../assets/images/food/04.jpg" pprice="30.000" pdesc="Re-defining the perception of advanced mobile phones? the HTC Touch Diamond? signals a giant leap forward in combining hi-tech prowess with intuitive usability and exhilarating design." pcategory="rice" pname="MS4 Bò Xào" pid="103" />-->
+            <!--<input type="hidden" pimage="../assets/images/food/05.jpg" pprice="30.000" pdesc="IMAC G5/1.8 256MB 160GB SD 20IN OS10.3" pcategory="noodle" pname="MS5 Bún Bò Huế" pid="4" />-->
+            <!--<input type="hidden" pimage="../assets/images/food/06.jpg" pprice="30.000" pdesc="" pcategory="noodle" pname="MS6 Bún Mộc" pid="5" />-->
+            <!--<input type="hidden" pimage="../assets/images/food/07.jpg" pprice="30.000" pdesc="" pcategory="noodle" pname="MS7 Bánh Canh" pid="6" />-->
+            <!--<input type="hidden" pimage="../assets/images/food/08.jpg" pprice="30.000" pdesc="" pcategory="noodle" pname="MS7 Bún Riêu" pid="7" />-->
         </div>
     </section><!--/#portfolio-->
 
     <section id="features">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title text-center wow fadeInDown">THANH TOÁN</h2>
-                <p class="text-center wow fadeInDown">Vui lòng kiểm tra giỏ hàng trước khi thanh toán</p>
+                <h2 class="section-title text-center wow fadeInDown">ĐẶT MÓN</h2>
+                <p class="text-center wow fadeInDown">Vui lòng kiểm tra giỏ hàng trước khi đặt món</p>
             </div>
             <div class="row">
                 <table id="cart" class="table table-hover table-condensed table-striped">
@@ -164,8 +167,8 @@
                             <input type="number" class="form-control text-center" value="1">
                          </td>
                          <td data-th="Subtotal" class="text-center">30k</td>
-                         <td class="actions" data-th="">                        
-                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>                                
+                         <td class="actions" data-th="">
+                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
                          </td>
                       </tr> -->
                       
@@ -175,23 +178,54 @@
                          <td class="text-center"><strong>Total 1.99</strong></td>
                       </tr>
                       <tr>
-                         <td><a href="#portfolio" class="btn btn-warning"><i class="fa fa-angle-left"></i> Chọn Thêm</a></td>
+                         <td><a id="add_more" class="btn btn-warning"><i class="fa fa-angle-left"></i> Chọn Thêm</a></td>
                          <td colspan="2" class="hidden-xs"></td>
                          <td class="hidden-xs text-center" id = "totalMoney"><strong>Tổng 30k</strong></td>
-                         <td><a href="#" id="payMoney" class="btn btn-success btn-block">Thanh Toán <i class="fa fa-angle-right"></i></a></td>
+                         <td><a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#orderModal" data-whatever="@happylunch">Đặt Món <i class="fa fa-angle-right"></i></a></td>
                       </tr>
                    </tfoot>
                 </table>
+                <!-- modal to send data -->
+                <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" id="orderModalLabel">Thông Tin Khách Hàng</h4>
+                                <small>Happy Lunch sẽ thanh toán tiền khi giao hàng</small>
+                            </div>
+                            <div class="modal-body">
+                                <form id="main-order-form" name="contact-form" method="post" action="#" th:action="@{/customer/order}" th:object="${customerOrder}">
+                                    <div class="form-group">
+                                        <input type="text" th:field="*{name}" name="customer_name" class="form-control" placeholder="Tên" required="required" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" th:field="*{phone}" name="customer_phone" class="form-control" placeholder="SĐT" required="required" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" th:field="*{address}" name="customer_address" class="form-control" placeholder="Địa Chỉ" required="required" />
+                                    </div>
+                                    <div class="form-group sr-only">
+                                        <input type="text" th:field="*{items}" name="customer_items" class="form-control" placeholder="Danh sách" required="required" />
+                                    </div>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                    <button type="submit" class="btn btn-primary">Gửi</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- modal to send data -->
             </div>
         </div>
     </section>
 
-    <section id="services" style="display: none">
+    <section id="services" style="display: display">
         <div class="container">
 
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">HƯỚNG DẪN</h2>
-                <p class="text-center wow fadeInDown">Hướng dẫn đặt hàng và thanh toán</p>
+                <p class="text-center wow fadeInDown">Khách hàng có thể đặt món bằng 1 trong 3 cách sau</p>
             </div>
 
             <div class="row">
@@ -199,11 +233,13 @@
                     <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="0ms">
                         <div class="media service-box">
                             <div class="pull-left">
-                                <i class="fa fa-line-chart"></i>
+                                <i class="fa fa-phone"></i>
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">UX design</h4>
-                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+                                <h4 class="media-heading">Đặt Món Qua <span class="text-danger">Hotline</span></h4>
+                                <h5>Bước 1: <small>Khách hàng tổng hợp mã số món cần đặt</small></h5>
+                                <h5>Bước 2: <small>Gọi đến hotline <span class="text-danger">0975.40.36.38</span> để đặt món</small></h5>
+                                <h5>Bước 3: <small>Happy Lunch sẽ thanh toán tiền khi giao hàng</small></h5>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -211,11 +247,13 @@
                     <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="100ms">
                         <div class="media service-box">
                             <div class="pull-left">
-                                <i class="fa fa-cubes"></i>
+                                <i class="fa fa-shopping-cart"></i>
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">UI design</h4>
-                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+                                <h4 class="media-heading">Đặt Món Qua Website</h4>
+                                <h5>Bước 1: <small>Chọn món ở phần <span class="text-primary">Thực Đơn</span></small></h5>
+                                <h5>Bước 2: <small>Chuyển sang <span class="text-primary">Đặt Món</span> để điền thông tin</small></h5>
+                                <h5>Bước 3: <small>Happy Lunch sẽ thanh toán tiền khi giao hàng</small></h5>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -223,47 +261,13 @@
                     <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="200ms">
                         <div class="media service-box">
                             <div class="pull-left">
-                                <i class="fa fa-pie-chart"></i>
+                                <i class="fa fa-facebook-square"></i>
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">SEO Services</h4>
-                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
-                            </div>
-                        </div>
-                    </div><!--/.col-md-4-->
-                
-                    <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
-                        <div class="media service-box">
-                            <div class="pull-left">
-                                <i class="fa fa-bar-chart"></i>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">iOS App</h4>
-                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
-                            </div>
-                        </div>
-                    </div><!--/.col-md-4-->
-
-                    <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="400ms">
-                        <div class="media service-box">
-                            <div class="pull-left">
-                                <i class="fa fa-language"></i>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">Android App</h4>
-                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
-                            </div>
-                        </div>
-                    </div><!--/.col-md-4-->
-
-                    <div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="300ms" data-wow-delay="500ms">
-                        <div class="media service-box">
-                            <div class="pull-left">
-                                <i class="fa fa-bullseye"></i>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">Win App</h4>
-                                <p>Backed by some of the biggest names in the industry, Firefox OS is an open platform that fosters greater</p>
+                                <h4 class="media-heading">Đặt Món Qua <a href="http://fb.me/happylunchvn" target="_blank" rel="nofollow" onmouseover="LinkshimAsyncLink.swap(this, &quot;http:\/\/fb.me\/happylunchvn&quot;);" onclick="LinkshimAsyncLink.referrer_log(this, &quot;http:\/\/fb.me\/happylunchvn&quot;, &quot;\/si\/ajax\/l\/render_linkshim_log\/?u=http\u00253A\u00252F\u00252Ffb.me\u00252Fhappylunchvn&amp;h=QAQGEc5xN&amp;render_verification=0&amp;enc&amp;d&quot;);">FaceBook</a></h4>
+                                <h5>Bước 1: <small>Khách hàng tổng hợp mã số món cần đặt</small></h5>
+                                <h5>Bước 2: <small>Chuyển sang <a href="http://m.me/happylunchvn">PAGE</a> nhắn tin cho Happy Lunch</small></h5>
+                                <h5>Bước 3: <small>Happy Lunch sẽ thanh toán tiền khi giao hàng</small></h5>
                             </div>
                         </div>
                     </div><!--/.col-md-4-->
@@ -276,7 +280,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">LIÊN HỆ</h2>
-                <p class="text-center wow fadeInDown">Kênh liên lạc giữa khách hàng và Happy Lunch để thực hiện thanh toán giỏ hàng hoặc góp ý</p>
+                <p class="text-center wow fadeInDown">Kênh liên lạc giữa khách hàng và Happy Lunch</p>
             </div>
         </div>
     </section><!--/#get-in-touch-->
@@ -301,13 +305,7 @@
                                     <input type="text" name="name" class="form-control" placeholder="Tên" required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control" placeholder="Email" required="required" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="number" name="phone" class="form-control" placeholder="SĐT" required="required" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="address" class="form-control" placeholder="Địa Chỉ" required="required" />
+                                    <input type="number" name="email" class="form-control" placeholder="Email" required="required" />
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="subject" class="form-control" placeholder="Tiêu Đề" required="required" />
@@ -343,7 +341,8 @@
 
     <script src="../assets/js/jquery.js" th:href="@{/assets/js/jquery.js}"></script>
     <script src="../assets/js/bootstrap.min.js" th:href="@{/assets/js/bootstrap.min.js}"></script>
-    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <!--<script src="http://maps.google.com/maps/api/js?sensor=true"></script>-->
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyC1prcppMXNUJKcAZz8RZDDUXVBKKsVHg4"></script>
     <script src="../assets/js/owl.carousel.min.js" th:href="@{/assets/js/owl.carousel.min.js}"></script>
     <script src="../assets/js/mousescroll.js" th:href="@{/assets/js/mousescroll.js}"></script>
     <script src="../assets/js/smoothscroll.js" th:href="@{/assets/js/smoothscroll.js}"></script>

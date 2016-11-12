@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Heroku Spring Boot Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.css" th:href="@{/assets/css/bootstrap.css}" />
+    <link rel="stylesheet" href="../assets/css/thymeleaf-demo.css" th:href="@{/assets/css/style.css}" />
+</head>
+<body>
+<!--<div style="margin-top: 20px;margin-left: 50px">-->
+<div class="container">
+    <div class="row">
+        <p class="style1"><a href="/administration">Home</a></p>
+    </div>
+    <div class="row" th:if="${product}">
+        <form action="#" th:action="@{/product/add}" th:object="${product}" method="post">
+            <table border="0">
+                <tr>
+                    <td colspan="2" align="center"><h2>Product Form</h2></td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><input id="id" type="hidden" th:field="*{id}"/><input id="name" type="text" th:field="*{name}"/></td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td><input id="desc" type="text" th:field="*{description}"/></td>
+                </tr>
+                <tr>
+                    <td>Price:</td>
+                    <td><input id="price" type="number" th:field="*{price}"/></td>
+                </tr>
+                <tr>
+                    <td>Images Path:</td>
+                    <td><input id="img" type="text" th:field="*{image}"/></td>
+                </tr>
+                <tr>
+                    <td>Available: </td>
+                    <td>
+                        <input type="checkbox" th:field="*{status}" th:value="${status}" th:checked="${status}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Category: </td>
+                    <td>
+                        <select name="category">
+                            <option th:each="choice : ${categories}"
+                                    th:value="${choice.id}"
+                                    th:text="${choice.name}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input class="btn btn-primary btn-sm" type="submit" name="Submit" value="Save"/></td>
+                    <td th:unless="${products}"><a class="btn btn-primary btn-sm" href="/product/view">Back</a></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+    <div class="row" th:if="${products}">
+        <table class="table table-striped">
+            <th>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Description</td>
+                <td>Price</td>
+                <td>Available</td>
+                <td>Image Path</td>
+                <td>Date Updated</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </th>
+            <tr th:each="pro : ${products}">
+                <td></td>
+                <td th:text="${pro.id}" ></td>
+                <td th:text="${pro.name}" ></td>
+                <td th:text="${pro.description}" ></td>
+                <td th:text="${pro.price}" ></td>
+                <td th:text="${pro.status}" ></td>
+                <td th:text="${pro.image}" ></td>
+                <td th:text="${pro.lastUpdate}" ></td>
+                <td>
+                    <form action="#" th:action="@{'/product/edit/{id}'(id=${pro.id})}" th:method="get" >
+                        <button type="submit" id="submitButton"> Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="#" th:action="@{'/product/delete/{id}'(id=${pro.id})}" th:method="delete" >
+                        <button type="submit" id="submitButton"> Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

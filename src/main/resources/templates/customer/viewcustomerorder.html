@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Customer Management</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.css" th:href="@{/assets/css/bootstrap.css}" />
+    <link rel="stylesheet" href="../assets/css/thymeleaf-demo.css" th:href="@{/assets/css/style.css}" />
+</head>
+<body>
+<!--<div style="margin-top: 20px;margin-left: 50px">-->
+<div class="container">
+    <div class="row">
+        <p class="style1"><a href="/administration">Home</a></p>
+    </div>
+    <div class="row" th:if="${customerOrder}">
+        <form action="#" th:action="@{/product/add}" th:object="${customerOrder}" method="post">
+            <table border="0">
+                <tr>
+                    <td colspan="2" align="center"><h2>Customer Order Form</h2></td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><input id="id" type="hidden" th:field="*{id}"/><input id="name" type="text" th:field="*{name}"/></td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td><input id="phone" type="text" th:field="*{phone}"/></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><input id="address" type="text" th:field="*{address}"/></td>
+                </tr>
+                <tr>
+                    <td>Ordered Items:</td>
+                    <td><input id="items" type="text" th:field="*{items}"/></td>
+                </tr>
+                <tr>
+                    <td><input class="btn btn-primary btn-sm" type="submit" name="Submit" value="Save"/></td>
+                    <td th:unless="${customerOrders}"><a class="btn btn-primary btn-sm" href="/customer/order/view">Back</a></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+    <div class="row" th:if="${customerOrders}">
+        <table class="table table-striped">
+            <th>
+                <td>Name</td>
+                <td>Phone</td>
+                <td>Address</td>
+                <td>Order Items</td>
+                <td>Date Order</td>
+                <td>Total Money</td>
+                <td>Edit</td>
+                <td>Status</td>
+            </th>
+            <tr th:each="item : ${customerOrders}">
+                <td></td>
+                <td th:text="${item.name}" ></td>
+                <td th:text="${item.phone}" ></td>
+                <td th:text="${item.address}" ></td>
+                <td>
+                    <p th:each="pro : ${item.orderedProductCollection}">
+                        <span th:text="${pro.product.name}"></span> - Số lượng: <span th:text="${pro.quantity}"></span>
+                    </p>
+                </td>
+                <td th:text="${item.dateCreated}" ></td>
+                <td>VND <span th:text="${#numbers.formatDecimal(item.total, 0, 'COMMA', 2, 'POINT')}">10.00</span></td>
+                <td >
+                    <form action="#" th:action="@{'/customer/order/edit/{id}'(id=${item.id})}" th:method="get" >
+                        <button type="submit" id="submitButton"> Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="#" th:action="@{'/customer/order/delete/{id}'(id=${item.id})}" th:method="delete" >
+                        <button type="submit" id="submitButton"> Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

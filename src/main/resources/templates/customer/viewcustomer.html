@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Customer Management</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.css" th:href="@{/assets/css/bootstrap.css}" />
+    <link rel="stylesheet" href="../assets/css/thymeleaf-demo.css" th:href="@{/assets/css/style.css}" />
+</head>
+<body>
+<!--<div style="margin-top: 20px;margin-left: 50px">-->
+<div class="container">
+    <div class="row">
+        <p class="style1"><a href="/administration">Home</a></p>
+    </div>
+    <div class="row" th:if="${customer}">
+        <form action="#" th:action="@{/customer/add}" th:object="${customer}" method="post">
+            <table border="0">
+                <tr>
+                    <td colspan="2" align="center"><h2>Customer Form</h2></td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><input id="id" type="hidden" th:field="*{id}"/><input id="name" type="text" th:field="*{name}"/></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><input id="desc" type="text" th:field="*{email}"/></td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td><input id="price" type="number" th:field="*{phone}"/></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><input id="img" type="text" th:field="*{address}"/></td>
+                </tr>
+                <tr style="visibility: hidden">
+                    <td>Images Path:</td>
+                    <td><input id="img" type="text" th:field="*{cityRegion}" value="HCM"/></td>
+                </tr>
+                <tr style="visibility: hidden">
+                    <td>Images Path:</td>
+                    <td><input id="img" type="text" th:field="*{ccNumber}" value="0"/></td>
+                </tr>
+                <tr>
+                    <td><input class="btn btn-primary btn-sm" type="submit" name="Submit" value="Save"/></td>
+                    <td th:unless="${customers}"><a class="btn btn-primary btn-sm" href="/customer/view">Back</a></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+    <div class="row" th:if="${customers}">
+        <table class="table table-striped">
+            <th>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+                <td>Address</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </th>
+            <tr th:each="cus : ${customers}">
+                <td></td>
+                <td th:text="${cus.name}" ></td>
+                <td th:text="${cus.email}" ></td>
+                <td th:text="${cus.phone}" ></td>
+                <td th:text="${cus.address}" ></td>
+                <td>
+                    <form action="#" th:action="@{'/customer/edit/{id}'(id=${cus.id})}" th:method="get" >
+                        <button type="submit" id="submitButton"> Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="#" th:action="@{'/customer/delete/{id}'(id=${cus.id})}" th:method="delete" >
+                        <button type="submit" id="submitButton"> Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

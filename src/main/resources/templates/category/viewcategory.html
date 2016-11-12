@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Heroku Spring Boot Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.css" th:href="@{/assets/css/bootstrap.css}" />
+    <link rel="stylesheet" href="../assets/css/thymeleaf-demo.css" th:href="@{/assets/css/style.css}" />
+</head>
+<body>
+<!--<div style="margin-top: 20px;margin-left: 50px">-->
+<div class="container">
+    <div class="row">
+        <p class="style1"><a href="/administration">Home</a></p>
+    </div>
+    <div class="row" th:if="${category}">
+        <form action="#" th:action="@{/category/add}" th:object="${category}" method="post">
+            <table border="0">
+                <tr>
+                    <td colspan="2" align="center"><h2>Category Form</h2></td>
+                </tr>
+                <tr>
+                    <td>Category Name:</td>
+                    <td><input id="id" type="hidden" th:field="*{id}"/><input id="name" type="text" th:field="*{name}"/></td>
+                </tr>
+                <tr>
+                    <td><input class="btn btn-primary btn-sm" type="submit" name="Submit" value="Save"/></td>
+                    <td th:unless="${categories}"><a class="btn btn-primary btn-sm" href="/category/view">Back</a></td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+    <div class="row" th:if="${categories}">
+        <table class="table table-striped">
+            <th>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </th>
+            <tr th:each="cag : ${categories}">
+                <td></td>
+                <td th:text="${cag.id}" ></td>
+                <td th:text="${cag.name}" ></td>
+                <td>
+                    <form action="#" th:action="@{'/category/edit/{id}'(id=${cag.id})}" th:method="get" >
+                        <button type="submit" id="submitButton"> Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="#" th:action="@{'/category/delete/{id}'(id=${cag.id})}" th:method="delete" >
+                        <button type="submit" id="submitButton"> Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
