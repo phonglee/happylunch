@@ -441,10 +441,13 @@ ul.nostyle i {
   color: #fff;
 }
 #portfolio .portfolio-item .portfolio-item-inner .portfolio-info h3 {
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1;
   margin: 0;
   color: #fff;
+}
+#portfolio .portfolio-item .portfolio-item-inner .portfolio-info span {
+  font-size: 11px;
 }
 #portfolio .portfolio-item .portfolio-item-inner .portfolio-info .preview {
   position: absolute;
